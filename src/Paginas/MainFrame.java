@@ -48,6 +48,8 @@ public class MainFrame extends JFrame implements Serializable{
     private JRadioButton botHub2;
     private JRadioButton botHub3;
     private JLabel etiHub;
+    private JButton botToneladas;
+    private JTextField textToneladas;
     private Puerto puerto;
     public MainFrame() {
         setContentPane(mainPanel);
@@ -322,6 +324,31 @@ public class MainFrame extends JFrame implements Serializable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 textEstado.setText(puerto.getP(2).toString());
+            }
+        });
+
+        //BOTON TONELADAS EXAMEN
+        botToneladas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int numero = 1;
+                if (botHub1.isSelected()) {
+                    numero = 1;
+                } else if (botHub2.isSelected()) {
+                    numero = 2;
+                } else if (botHub3.isSelected()) {
+                    numero = 3;
+                }
+
+                if(Objects.equals(textToneladas.getText(), "")){
+                    etiError.setText("* Error no hay un peso seleccionado");
+                }
+                else{
+                    String cadena = puerto.toneladas(Integer.parseInt(textToneladas.getText()), numero);
+                    etiError.setText("");
+                    Toneladas verToneladas = new Toneladas(cadena);
+                    verToneladas.setVisible(true);
+                }
             }
         });
     }
